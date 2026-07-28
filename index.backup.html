@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add('js');</script>
+
+<meta name="description" content="Spiral Edition is a cultural proposal by #LiquidExpo for Nothing, connecting music, architecture, fashion, technology and participation at Interlagos.">
+<meta name="theme-color" content="#07070A">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="#LiquidExpo — Spiral Edition · Made for Nothing">
+<meta property="og:description" content="Culture does not move in a line. It moves in a spiral.">
+<meta property="og:image" content="https://www.liquidexpo.art/spiral-edition-cover.jpg">
+<meta property="og:url" content="https://www.liquidexpo.art/spiral-edition">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="#LiquidExpo — Spiral Edition · Made for Nothing">
+<meta name="twitter:description" content="An interdisciplinary cultural experience where music, architecture, fashion and technology respond to one another in real time.">
+<meta name="twitter:image" content="https://www.liquidexpo.art/spiral-edition-cover.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+<style>
+  :root{
+    --black:#07070A;
+    --ink:#0D0D12;
+    --paper:#ECE8E3;
+    --paper-dim:#9D9996;
+    --violet:#B073F0;
+    --violet-soft:#C49AF2;
+    --violet-dim:#7A5AA8;
+    --amber:#E8935A;
+    --gold:#C9A876;
+    --line:rgba(236,232,227,0.12);
+    --line-strong:rgba(236,232,227,0.24);
+    --max:1400px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+
+  ::selection{background:var(--violet);color:var(--black);}
+  a{color:inherit;}
+  img,svg,canvas{display:block;}
+  button,a{-webkit-tap-highlight-color:transparent;}
+
+  h1,h2,h3,h4,h5,.display{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.08em;
+    font-size:11px;
+    text-transform:uppercase;
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.15em;
+    color:var(--violet);
+    text-transform:uppercase;
+    display:inline-block;
+    margin-bottom:16px;
+  }
+
+  .topbar{
+    position:fixed;
+    inset:0 0 auto 0;
+    z-index:40;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 5vw;
+    pointer-events:none;
+    background:linear-gradient(to bottom,rgba(7,7,10,.72),transparent);
+    backdrop-filter:blur(3px);
+  }
+
+  .topbar .mark{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    letter-spacing:0.18em;
+    font-size:13px;
+  }
+
+  .topbar .coords{color:var(--paper-dim);}
+
+  .spine{
+    position:fixed;
+    left:5vw;
+    top:120px;
+    bottom:60px;
+    width:1px;
+    background:var(--line);
+    z-index:35;
+  }
+
+  .spine-fill{
+    position:absolute;
+    inset:0 auto auto 0;
+    width:1px;
+    height:0%;
+    background:var(--violet);
+    box-shadow:0 0 12px rgba(176,115,240,.8);
+  }
+
+  .spine-dot{
+    position:absolute;
+    left:-3px;
+    top:0%;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--paper);
+    transform:translateY(-50%);
+  }
+
+  section{
+    position:relative;
+    padding:150px 5vw;
+    max-width:var(--max);
+    margin:0 auto;
+  }
+
+  @media (min-width:861px){
+    section{padding-left:calc(5vw + 40px);}
+  }
+
+  .hero{
+    border-top:1px solid rgba(236,232,227,.08);
+    background:var(--black);
+    max-width:none;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 5vw;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .hero::after{display:none;}
+
+  .sphere-intro{
+    position:relative;
+    width:100%;
+    min-height:82svh;
+    max-width:none;
+    padding:0;
+    margin:0;
+    background:var(--black);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .sphere-video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center center;
+    object-position:center;
+    z-index:1;
+    background:var(--black);
+  }
+
+  .sphere-intro::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 50% 50%,transparent 34%,rgba(7,7,10,.18) 62%,rgba(7,7,10,.92) 100%),
+      linear-gradient(to bottom,rgba(7,7,10,.12),transparent 28%,transparent 72%,rgba(7,7,10,.72));
+  }
+
+  #orbit{
+    display:none;
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:2;
+    opacity:.72;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 50% 50%,rgba(176,115,240,.10),transparent 9%),
+      repeating-radial-gradient(ellipse at 50% 50%,
+        rgba(176,115,240,.13) 0 1px,
+        transparent 1px 34px);
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:10;
+    max-width:860px;
+  }
+
+  .hero h1{
+    font-size:clamp(42px,6.6vw,96px);
+    line-height:.98;
+    font-weight:600;
+    letter-spacing:-.035em;
+  }
+
+  .hero h1 em{
+    font-style:normal;
+    color:var(--violet);
+    text-shadow:0 0 36px rgba(176,115,240,.24);
+  }
+
+  .hero p.lede{
+    margin-top:30px;
+    font-size:clamp(16px,1.35vw,18px);
+    line-height:1.72;
+    color:var(--paper-dim);
+    max-width:650px;
+  }
+
+  .hero-foot{
+    position:absolute;
+    bottom:42px;
+    left:5vw;
+    right:5vw;
+    z-index:10;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--paper-dim);
+    text-transform:uppercase;
+  }
+
+  .hero-foot .made-for span{color:var(--paper);}
+
+  .scroll-cue{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .scroll-cue .bar{
+    width:1px;
+    height:34px;
+    background:var(--line-strong);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .scroll-cue .bar::after{
+    content:'';
+    position:absolute;
+    top:-100%;
+    left:0;
+    width:100%;
+    height:100%;
+    background:var(--violet);
+    animation:drip 2.2s ease-in-out infinite;
+  }
+
+  @keyframes drip{
+    0%{top:-100%;}
+    50%{top:0%;}
+    100%{top:100%;}
+  }
+
+  .head{
+    max-width:760px;
+    margin-bottom:58px;
+  }
+
+  .head h2,
+  section > .grid-2 h2{
+    font-size:clamp(30px,4vw,54px);
+    line-height:1.04;
+    letter-spacing:-.02em;
+  }
+
+  .accent{color:var(--violet);}
+
+  .intro-lines p{
+    font-size:clamp(17px,1.7vw,21px);
+    line-height:1.86;
+    max-width:800px;
+    color:var(--paper-dim);
+    margin-bottom:22px;
+  }
+
+  .intro-lines .thesis{
+    color:var(--paper);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(21px,2.2vw,29px);
+    font-weight:500;
+    line-height:1.42;
+    max-width:860px;
+    margin:38px 0;
+  }
+
+  .intro-lines .credo{
+    margin-top:44px;
+    padding-top:30px;
+    border-top:1px solid var(--line);
+    font-size:16px;
+    color:var(--paper-dim);
+  }
+
+  .intro-lines .credo b{color:var(--violet);font-weight:500;}
+
+  .grid-2{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:82px;
+    align-items:center;
+  }
+
+  .concept-text p,
+  .space-text p{
+    font-size:16px;
+    line-height:1.82;
+    color:var(--paper-dim);
+    margin-bottom:18px;
+  }
+
+  .concept-text .flow{
+    color:var(--paper);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:15px;
+    line-height:2.1;
+  }
+
+  .node{color:var(--amber);}
+
+  .callout{
+    margin-top:28px;
+    color:var(--violet);
+    font-size:18px;
+    font-weight:500;
+    font-family:'Space Grotesk',sans-serif;
+  }
+
+  .spiral-diagram{
+    position:relative;
+    aspect-ratio:1/1;
+    max-width:520px;
+    margin:0 auto;
+  }
+
+  .spiral-diagram::after{
+    content:'';
+    position:absolute;
+    inset:17%;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(176,115,240,.08),transparent 68%);
+    filter:blur(14px);
+    pointer-events:none;
+  }
+
+  .spiral-diagram svg{width:100%;height:100%;}
+
+  .track-labels{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    color:var(--violet);
+    text-transform:uppercase;
+  }
+
+  .space-text .keyword{color:var(--violet);}
+  .space-text .final{
+    color:var(--paper);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;
+    font-weight:500;
+  }
+
+  .alignment-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:36px;
+  }
+
+  .alignment-col{
+    background:var(--black);
+    padding:34px 30px;
+  }
+
+  .alignment-col h4{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--violet);
+    margin-bottom:18px;
+  }
+
+  .alignment-col ul{
+    list-style:none;
+    display:grid;
+    gap:12px;
+    color:var(--paper-dim);
+    font-size:15px;
+    line-height:1.55;
+  }
+
+  .alignment-col li::before{
+    content:'↳';
+    color:var(--amber);
+    margin-right:10px;
+  }
+
+  .shared-territory{
+    margin-top:1px;
+    padding:34px 30px;
+    border:1px solid var(--line);
+    border-top:none;
+    background:
+      radial-gradient(circle at 50% 0%,rgba(176,115,240,.15),transparent 55%),
+      var(--ink);
+  }
+
+  .shared-territory .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--paper-dim);
+  }
+
+  .shared-territory h3{
+    font-size:clamp(24px,3vw,38px);
+    margin-top:10px;
+    color:var(--paper);
+  }
+
+  .shared-territory p{
+    margin-top:12px;
+    max-width:760px;
+    color:var(--paper-dim);
+    line-height:1.75;
+  }
+
+  .proposal-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:34px;
+  }
+
+  .proposal-card{
+    background:var(--black);
+    padding:28px 24px 30px;
+    min-height:210px;
+  }
+
+  .proposal-card .num{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--violet-dim);
+    margin-bottom:28px;
+  }
+
+  .proposal-card h4{
+    font-size:18px;
+    margin-bottom:10px;
+  }
+
+  .proposal-card p{
+    font-size:14px;
+    line-height:1.65;
+    color:var(--paper-dim);
+  }
+
+  .proposal-note{
+    margin-top:30px;
+    color:var(--paper);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;
+    line-height:1.5;
+    max-width:820px;
+  }
+
+  .ecosystem{
+    display:grid;
+    gap:34px;
+  }
+
+  .ecosystem-layer{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+  }
+
+  .ecosystem-layer h4{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+  }
+
+  .eco-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+
+  .eco-cell{
+    background:var(--black);
+    padding:25px 22px;
+    transition:background .3s ease,transform .3s ease;
+  }
+
+  .eco-cell:hover{
+    background:var(--ink);
+    transform:translateY(-2px);
+  }
+
+  .eco-cell .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    color:var(--violet-dim);
+    text-transform:uppercase;
+  }
+
+  .eco-cell h5{
+    font-size:16px;
+    margin:8px 0 6px;
+  }
+
+  .eco-cell p{
+    font-size:13px;
+    color:var(--paper-dim);
+    line-height:1.55;
+  }
+
+  .value-grid{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+
+  .value-cell{
+    background:var(--black);
+    padding:24px 18px;
+  }
+
+  .value-cell h5{
+    font-size:14px;
+    margin-bottom:8px;
+  }
+
+  .value-cell p{
+    font-size:12px;
+    line-height:1.5;
+    color:var(--paper-dim);
+  }
+
+  .closing{
+    max-width:none;
+    min-height:92svh;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .beam-scene{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background:
+      radial-gradient(ellipse 55% 36% at 50% 100%,rgba(232,147,90,.14),transparent 70%),
+      radial-gradient(circle at 50% 58%,rgba(176,115,240,.09),transparent 42%),
+      linear-gradient(to bottom,#07070A 0%,#0B0810 55%,#14101C 100%);
+  }
+
+  .beam{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:2px;
+    height:72%;
+    background:linear-gradient(to top,var(--amber),var(--violet) 58%,transparent);
+    filter:blur(.4px);
+    box-shadow:0 0 70px 14px rgba(176,115,240,.20);
+  }
+
+  .beam::after{
+    content:'';
+    position:absolute;
+    left:50%;
+    bottom:0;
+    width:260px;
+    height:260px;
+    transform:translate(-50%,55%);
+    border-radius:50%;
+    border:1px solid rgba(232,147,90,.18);
+    box-shadow:0 0 50px rgba(232,147,90,.16);
+  }
+
+  .closing-content{
+    position:relative;
+    z-index:2;
+    max-width:720px;
+  }
+
+  .closing-content .eyebrow{color:var(--amber);}
+
+  .closing-content h2{
+    font-size:clamp(34px,5vw,62px);
+    line-height:1.03;
+    margin-bottom:26px;
+    letter-spacing:-.03em;
+  }
+
+  .closing-content .line2{
+    color:var(--violet);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:500;
+    font-size:clamp(22px,3vw,34px);
+    margin-top:12px;
+  }
+
+  .contact{
+    padding:120px 5vw 64px;
+  }
+
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:70px;
+    border-top:1px solid var(--line);
+    padding-top:58px;
+  }
+
+  .contact h2{
+    font-size:clamp(30px,4vw,46px);
+    line-height:1.1;
+    margin-bottom:20px;
+  }
+
+  .contact .lede{
+    color:var(--paper-dim);
+    font-size:16px;
+    line-height:1.7;
+    max-width:480px;
+  }
+
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    margin-top:34px;
+    padding:16px 26px;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    transition:background .25s ease,color .25s ease,transform .25s ease;
+  }
+
+  .cta:hover{
+    background:var(--gold);
+    color:var(--black);
+    transform:translateY(-2px);
+  }
+
+  .contact-meta{
+    font-size:14px;
+    color:var(--paper-dim);
+    line-height:2.05;
+  }
+
+  .contact-meta a{
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition:border-color .2s,color .2s;
+  }
+
+  .contact-meta a:hover{
+    border-color:var(--paper-dim);
+    color:var(--paper);
+  }
+
+  .contact-meta .name{
+    color:var(--paper);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:17px;
+    display:block;
+  }
+
+  .contact-meta .role{
+    color:var(--violet);
+    margin-bottom:16px;
+    display:block;
+  }
+
+  .foot-bottom{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:40px 5vw 30px;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    color:var(--paper-dim);
+    text-transform:uppercase;
+    border-top:1px solid var(--line);
+  }
+
+  .reveal{
+    opacity:1;
+    transform:none;
+  }
+
+  .js .reveal{
+    opacity:1;
+    transform:none;
+  }
+
+  .js .reveal.in{
+    opacity:1;
+    transform:none;
+  }
+
+  @media (max-width:1080px){
+    .proposal-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .value-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  }
+
+  @media (max-width:900px){
+    .grid-2,
+    .contact-grid{grid-template-columns:1fr;gap:48px;}
+    .alignment-grid{grid-template-columns:1fr;}
+    .eco-grid{grid-template-columns:1fr 1fr;}
+  }
+
+  @media (max-width:860px){
+    .spine{display:none;}
+    .topbar{padding:20px 22px;}
+    section{padding:110px 22px;}
+    .hero{padding:0 22px;}
+    .hero-foot{left:22px;right:22px;bottom:28px;}
+    .contact{padding:100px 22px 56px;}
+    .foot-bottom{padding:34px 22px 26px;}
+  }
+
+  @media (max-width:640px){
+    .topbar .coords{display:none;}
+    .sphere-intro{min-height:76svh;}
+    .sphere-video{object-fit:contain;}
+    .hero h1{font-size:clamp(42px,13vw,68px);}
+    .hero p.lede{font-size:15px;max-width:92%;}
+    .scroll-cue{display:none;}
+    .proposal-grid,
+    .eco-grid,
+    .value-grid{grid-template-columns:1fr;}
+    .proposal-card{min-height:auto;}
+    .foot-bottom{flex-direction:column;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .js .reveal{transition:none;opacity:1;transform:none;}
+    .scroll-cue .bar::after{animation:none;}
+    .eco-cell,.cta{transition:none;}
+  }
+
+  /* Minimal audio player */
+  .audio-player{
+    position:fixed;
+    right:24px;
+    bottom:24px;
+    z-index:80;
+    width:min(360px,calc(100vw - 32px));
+    padding:13px 14px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:12px;
+    border:1px solid rgba(236,232,227,.14);
+    background:rgba(7,7,10,.76);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 16px 50px rgba(0,0,0,.28);
+  }
+
+  .audio-toggle,
+  .audio-mute{
+    appearance:none;
+    border:0;
+    background:transparent;
+    color:var(--paper);
+    cursor:pointer;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+
+  .audio-toggle{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(236,232,227,.18);
+    border-radius:50%;
+    transition:border-color .2s ease,transform .2s ease,background .2s ease;
+  }
+
+  .audio-toggle:hover{
+    border-color:var(--violet);
+    background:rgba(176,115,240,.08);
+    transform:translateY(-1px);
+  }
+
+  .audio-main{
+    min-width:0;
+  }
+
+  .audio-meta{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:7px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--paper-dim);
+  }
+
+  .audio-title{
+    color:var(--paper);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .audio-progress{
+    position:relative;
+    height:1px;
+    background:rgba(236,232,227,.18);
+    cursor:pointer;
+  }
+
+  .audio-progress-fill{
+    position:absolute;
+    inset:0 auto 0 0;
+    width:0%;
+    background:linear-gradient(90deg,var(--violet),var(--amber));
+    box-shadow:0 0 10px rgba(176,115,240,.5);
+  }
+
+  .audio-mute{
+    color:var(--paper-dim);
+    min-width:40px;
+    text-align:right;
+  }
+
+  .audio-mute:hover{color:var(--paper);}
+
+  @media (max-width:640px){
+    .audio-player{
+      right:16px;
+      bottom:16px;
+      width:calc(100vw - 32px);
+    }
+  }
+
+</style>
+
+<style id="critical-sphere-layout">
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #07070A;
+  }
+
+  #sphereIntro {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100svh !important;
+    min-height: 100svh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #07070A !important;
+    isolation: isolate;
+  }
+
+  #sphereIntro .sphere-video {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    z-index: 1 !important;
+    display: block !important;
+    background: #07070A !important;
+  transform: scale(1.35) !important;
+transform-origin: center center !important;}
+
+  #sphereIntro #orbit {
+    display: none !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+
+  section.hero {
+    position: relative !important;
+    display: flex !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100svh !important;
+    margin: 0 !important;
+    background: #07070A !important;
+    background-image: none !important;
+    overflow: hidden !important;
+  }
+
+  section.hero video,
+  section.hero canvas,
+  section.hero .sphere-video {
+    display: none !important;
+  }
+
+  @media (max-width: 640px) {
+    #sphereIntro {
+      height: 100svh !important;
+      min-height: 100svh !important;
+    }
+  }
+</style>
+
+</head>
+<body data-build="sphere-first-locked-2026-07-27-v3">
+
+<div class="topbar">
+  <div class="mark">#LIQUIDEXPO</div>
+  <div class="mono coords">23.7036°S, 46.6991°W</div>
+</div>
+
+  <div class="spine" aria-hidden="true">
+    <div class="spine-fill" id="spineFill"></div>
+    <div class="spine-dot" id="spineDot"></div>
+  </div>
+
+<section class="sphere-intro" id="sphereIntro" aria-label="Spiral Edition sphere" style="height:100svh;min-height:100svh;display:block;position:relative;overflow:hidden;">
+  <video class="sphere-video" id="sphereVideo" autoplay muted loop playsinline preload="auto"
+    onerror="this.style.display='none';">
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <canvas id="orbit" aria-hidden="true"></canvas>
+</section>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">Proposal · Spiral Edition</span>
+    <h1>Culture does not move<br>in a line. It moves<br>in a <em>spiral.</em></h1>
+    <p class="lede">
+      A proposal for #LiquidExpo × Nothing: an interdisciplinary cultural experience
+      where music, architecture, fashion and technology stop taking turns and begin
+      responding to one another in real time.
+    </p>
+  </div>
+
+  <div class="hero-foot">
+    <div class="made-for">Made for <span>Nothing</span></div>
+    <div class="scroll-cue"><div class="bar"></div>Scroll</div>
+  </div>
+</section>
+
+<section id="intro">
+  <div class="head reveal">
+    <span class="eyebrow">01 — Introduction</span>
+    <h2>Culture has become too complex to be understood through <span class="accent">isolated disciplines.</span></h2>
+  </div>
+
+  <div class="intro-lines reveal">
+    <p>
+      Music no longer belongs only to music. Architecture no longer belongs only to buildings.
+      Fashion no longer belongs only to the body. Technology is no longer simply a tool.
+      It has become part of culture itself.
+    </p>
+
+    <p class="thesis">
+      The challenge is no longer to create more experiences. It is to make the invisible
+      relationships between them legible. That is the work of #LiquidExpo.
+    </p>
+
+    <p class="credo">
+      <b>Nothing</b> makes technology legible. <b>#LiquidExpo</b> makes culture legible.
+      Together, they can make invisible systems tangible.
+    </p>
+  </div>
+</section>
+
+<section id="concept">
+  <div class="grid-2">
+    <div class="reveal">
+      <span class="eyebrow">02 — The Concept</span>
+      <h2 style="margin-bottom:28px;">Not organized around disciplines. Organized around <span class="accent">relationships.</span></h2>
+
+      <div class="concept-text">
+        <p class="flow">
+          <span class="node">Music</span> activates architecture.
+          <span class="node">Architecture</span> redirects light.<br>
+          <span class="node">Light</span> reshapes fashion.
+          <span class="node">Fashion</span> extends the body.<br>
+          <span class="node">Artificial intelligence</span> responds.
+          <span class="node">People</span> rewrite the equation.
+        </p>
+
+        <p style="margin-top:24px;">
+          No discipline is the protagonist. The space between disciplines is.
+          Every encounter produces another, so the experience accumulates meaning as it moves.
+          That is why the first edition is called Spiral.
+        </p>
+
+        <p class="callout">By the end, the audience has not watched a spiral. They have become part of it.</p>
+      </div>
+    </div>
+
+    <div class="spiral-diagram reveal" aria-label="Spiral relationship diagram">
+      <svg viewBox="0 0 500 500" role="img">
+        <defs>
+          <linearGradient id="spiralStroke" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ECE8E3" stop-opacity=".18"/>
+            <stop offset="42%" stop-color="#B073F0" stop-opacity=".95"/>
+            <stop offset="78%" stop-color="#E8935A" stop-opacity=".78"/>
+            <stop offset="100%" stop-color="#ECE8E3" stop-opacity=".12"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <path id="spiralPath"
+          d="M250 250
+             C264 238, 283 240, 291 255
+             C304 280, 287 310, 257 316
+             C214 324, 177 292, 181 245
+             C186 184, 240 145, 302 157
+             C380 172, 422 249, 397 323
+             C366 414, 268 455, 179 416
+             C70 369, 30 241, 87 139"
+          fill="none"
+          stroke="url(#spiralStroke)"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          filter="url(#glow)"/>
+
+        <path
+          d="M250 250
+             C264 238, 283 240, 291 255
+             C304 280, 287 310, 257 316
+             C214 324, 177 292, 181 245
+             C186 184, 240 145, 302 157
+             C380 172, 422 249, 397 323
+             C366 414, 268 455, 179 416
+             C70 369, 30 241, 87 139"
+          fill="none"
+          stroke="#ECE8E3"
+          stroke-opacity=".18"
+          stroke-width=".8"
+          stroke-dasharray="2 9"/>
+
+        <circle cx="250" cy="250" r="4" fill="#ECE8E3"/>
+        <circle cx="291" cy="255" r="4" fill="#B073F0"/>
+        <circle cx="257" cy="316" r="3.5" fill="#E8935A"/>
+        <circle cx="181" cy="245" r="3.5" fill="#B073F0"/>
+        <circle cx="302" cy="157" r="3.5" fill="#ECE8E3" fill-opacity=".72"/>
+        <circle cx="397" cy="323" r="4" fill="#E8935A"/>
+        <circle cx="179" cy="416" r="3.5" fill="#B073F0"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="space">
+  <div class="grid-2">
+    <div class="space-text reveal">
+      <span class="eyebrow">03 — Why This Space</span>
+      <h2 style="font-size:clamp(28px,3.5vw,44px);margin-bottom:26px;">Interlagos is not merely a venue. It is a system of <span class="accent">movement.</span></h2>
+
+      <p>
+        Conceived as part of a broader urban vision built around water, leisure and circulation,
+        Interlagos carries a history larger than racing alone.
+      </p>
+
+      <p>
+        Cars return to the same points lap after lap, but never under the same conditions.
+        Each passage accumulates time, friction and transformation: repetition behaving less like
+        a circle than a <span class="keyword">spiral</span>.
+      </p>
+
+      <p>
+        The relationship between <span class="keyword">water</span>,
+        <span class="keyword">landscape</span> and <span class="keyword">movement</span>
+        is not an added metaphor. It is already embedded in the territory.
+      </p>
+
+      <p class="final">The venue is not a backdrop. It is the first participant.</p>
+    </div>
+
+    <div class="track-wrap reveal">
+      <svg viewBox="0 0 500 380" aria-label="Abstract Interlagos track diagram">
+        <path
+          d="M420,60 C460,90 460,140 415,165 C380,185 350,175 340,155
+             C325,130 300,135 290,160 C275,195 230,210 190,195
+             C150,180 145,150 175,130 C210,105 205,70 165,55
+             C120,38 70,60 60,105 C48,150 75,195 120,215
+             C150,228 180,250 175,280 C168,315 130,330 95,315
+             C60,300 45,265 65,235"
+          fill="none"
+          stroke="#ECE8E3"
+          stroke-opacity=".34"
+          stroke-width="1.4"/>
+
+        <path
+          d="M420,60 C460,90 460,140 415,165 C380,185 350,175 340,155
+             C325,130 300,135 290,160 C275,195 230,210 190,195
+             C150,180 145,150 175,130 C210,105 205,70 165,55
+             C120,38 70,60 60,105 C48,150 75,195 120,215
+             C150,228 180,250 175,280 C168,315 130,330 95,315
+             C60,300 45,265 65,235"
+          fill="none"
+          stroke="#B073F0"
+          stroke-opacity=".78"
+          stroke-width=".7"
+          stroke-dasharray="2 7"/>
+
+        <circle cx="290" cy="160" r="3.2" fill="#B073F0"/>
+        <circle cx="120" cy="215" r="3.2" fill="#E8935A"/>
+      </svg>
+
+      <div class="track-labels">
+        <span>Water · Landscape</span>
+        <span>Speed · Return</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why-nothing">
+  <div class="head reveal">
+    <span class="eyebrow">04 — Why Nothing</span>
+    <h2>Different practices. A shared ambition: making complex systems <span class="accent">humanly legible.</span></h2>
+  </div>
+
+  <div class="alignment-grid reveal">
+    <div class="alignment-col">
+      <h4>Nothing</h4>
+      <ul>
+        <li>Transparency as design language</li>
+        <li>Technology as expression</li>
+        <li>Systems made visible</li>
+        <li>Community as cultural energy</li>
+      </ul>
+    </div>
+
+    <div class="alignment-col">
+      <h4>#LiquidExpo</h4>
+      <ul>
+        <li>Fluidity as cultural language</li>
+        <li>Culture as experience</li>
+        <li>Relationships made perceptible</li>
+        <li>Participation as authorship</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="shared-territory reveal">
+    <span class="label">Shared territory</span>
+    <h3>Technology as cultural language.</h3>
+    <p>
+      Electronic music culture is where both worlds naturally meet:
+      a field in which sound, design, image, architecture, fashion, technology and human energy
+      continuously reshape one another.
+    </p>
+  </div>
+</section>
+
+<section id="proposal">
+  <div class="head reveal">
+    <span class="eyebrow">05 — The Proposal</span>
+    <h2>A cultural partnership with a clear role, a tangible form and room to <span class="accent">evolve together.</span></h2>
+  </div>
+
+  <div class="proposal-grid reveal">
+    <article class="proposal-card">
+      <span class="num">01 / Format</span>
+      <h4>A two-day interdisciplinary experience</h4>
+      <p>Music, spatial design, image, fashion, technology and participation arranged as one responsive cultural system.</p>
+    </article>
+
+    <article class="proposal-card">
+      <span class="num">02 / Nothing's role</span>
+      <h4>Founding technology and cultural partner</h4>
+      <p>Not a logo placement. A visible philosophical and technological presence within the experience itself.</p>
+    </article>
+
+    <article class="proposal-card">
+      <span class="num">03 / Core activation</span>
+      <h4>A responsive spatial ecosystem</h4>
+      <p>Sound, light, architecture and audience movement influencing one another across the site in real time.</p>
+    </article>
+
+    <article class="proposal-card">
+      <span class="num">04 / Next step</span>
+      <h4>A working session</h4>
+      <p>Define scope, technical integration, timeline, partnership model and the first shared prototype.</p>
+    </article>
+  </div>
+
+  <p class="proposal-note reveal">
+    The ambition is not to place technology inside culture.
+    It is to reveal that technology is already part of culture, and to give that relationship a form people can feel.
+  </p>
+</section>
+
+<section id="sustainability">
+  <div class="head reveal">
+    <span class="eyebrow">06 — Sustainability</span>
+    <h2>A fluid ecosystem of <span class="accent">shared value.</span></h2>
+  </div>
+
+  <p class="reveal" style="max-width:700px;color:var(--paper-dim);font-size:16px;line-height:1.8;margin-bottom:48px;">
+    Spiral Edition is designed as both a cultural experience and a sustainable platform:
+    one in which institutional support, creative production and public participation generate value that can circulate forward.
+  </p>
+
+  <div class="ecosystem">
+    <div class="ecosystem-layer reveal">
+      <h4>Enablers</h4>
+      <div class="eco-grid">
+        <div class="eco-cell"><span class="tag">Technology partner</span><h5>Nothing</h5><p>Founding partner embedded in the cultural and technological logic of the project.</p></div>
+        <div class="eco-cell"><span class="tag">Institutions</span><h5>Museums & foundations</h5><p>Cultural legitimacy, knowledge, archival continuity and public value.</p></div>
+        <div class="eco-cell"><span class="tag">Territory</span><h5>Venue & civic partners</h5><p>Infrastructure, access, local integration and long-term viability.</p></div>
+      </div>
+    </div>
+
+    <div class="ecosystem-layer reveal">
+      <h4>Creators</h4>
+      <div class="eco-grid">
+        <div class="eco-cell"><span class="tag">Artists</span><h5>Local & international</h5><p>The creators who populate and transform the field.</p></div>
+        <div class="eco-cell"><span class="tag">Studios</span><h5>Design & technology</h5><p>Teams shaping the spatial, visual and interactive systems.</p></div>
+        <div class="eco-cell"><span class="tag">Collectives</span><h5>Independent communities</h5><p>Distributed cultural intelligence and real-time experimentation.</p></div>
+      </div>
+    </div>
+
+    <div class="ecosystem-layer reveal">
+      <h4>Participants</h4>
+      <div class="eco-grid">
+        <div class="eco-cell"><span class="tag">Audience</span><h5>Co-authors</h5><p>People whose presence and movement actively alter the experience.</p></div>
+        <div class="eco-cell"><span class="tag">Members</span><h5>Ongoing community</h5><p>A relationship extending beyond a single date or venue.</p></div>
+        <div class="eco-cell"><span class="tag">Public</span><h5>Wider cultural reach</h5><p>Digital access, documentation and knowledge circulating beyond the site.</p></div>
+      </div>
+    </div>
+
+    <div class="ecosystem-layer reveal">
+      <h4>Value generated</h4>
+      <div class="value-grid">
+        <div class="value-cell"><h5>Ticketing</h5><p>Live access and programming.</p></div>
+        <div class="value-cell"><h5>Membership</h5><p>Continuity beyond one edition.</p></div>
+        <div class="value-cell"><h5>Content</h5><p>Streaming, film and editorial assets.</p></div>
+        <div class="value-cell"><h5>Collaborations</h5><p>Shared cultural and brand projects.</p></div>
+        <div class="value-cell"><h5>Objects</h5><p>Limited artifacts and editions.</p></div>
+        <div class="value-cell"><h5>Learning</h5><p>Workshops, labs and residencies.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" id="closing">
+  <div class="beam-scene" aria-hidden="true"><div class="beam"></div></div>
+
+  <div class="closing-content reveal">
+    <span class="eyebrow">07 — The Beginning of What Comes Next</span>
+    <h2>Some partnerships begin around a table.</h2>
+    <p class="line2">Let ours begin on a dancefloor.</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="eyebrow">08 — Begin the Conversation</span>
+      <h2>We are ready to shape the first prototype together.</h2>
+      <p class="lede">
+        A focused working session can define the scope, technical possibilities,
+        partnership model and route toward Spiral Edition.
+      </p>
+
+      <a class="cta" href="mailto:carolinadamasceno@liquidexpo.com.br?subject=Spiral%20Edition%20%C3%97%20Nothing">
+        Begin the conversation →
+      </a>
+    </div>
+
+    <div class="contact-meta reveal">
+      <span class="name">Carolina Damasceno</span>
+      <span class="role">Founder & Vision Holder, #LiquidExpo</span>
+      São Paulo<br>
+      <a href="mailto:carolinadamasceno@liquidexpo.com.br">carolinadamasceno@liquidexpo.com.br</a><br>
+      <a href="https://sandwiche.me/caroldamasceno" target="_blank" rel="noopener noreferrer">sandwiche.me/caroldamasceno</a><br>
+      <a href="https://linkedin.com/in/carolinasdamasceno" target="_blank" rel="noopener noreferrer">linkedin.com/in/carolinasdamasceno</a>
+    </div>
+  </div>
+</section>
+
+<div class="foot-bottom">
+  <span>#LiquidExpo — Spiral Edition</span>
+  <span>Global Cultural Platform</span>
+</div>
+
+<audio id="bgMusic" src="assets/audio/spiral-edition.mp3" loop preload="auto" autoplay></audio>
+
+<div class="audio-player" role="group" aria-label="Music player">
+  <button class="audio-toggle" id="audioToggle" type="button" aria-label="Play music">▶</button>
+
+  <div class="audio-main">
+    <div class="audio-meta">
+      <span class="audio-title">Spiral Edition</span>
+      <span id="audioTime">00:00</span>
+    </div>
+    <div class="audio-progress" id="audioProgress" aria-label="Music progress">
+      <div class="audio-progress-fill" id="audioProgressFill"></div>
+    </div>
+  </div>
+
+  <button class="audio-mute" id="audioMute" type="button" aria-label="Mute music">Sound</button>
+</div>
+
+<script>
+  const fill = document.getElementById('spineFill');
+  const dot = document.getElementById('spineDot');
+
+  function updateSpine(){
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    fill.style.height = progress + '%';
+    dot.style.top = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateSpine, { passive:true });
+  updateSpine();
+
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.14 });
+
+  document.querySelectorAll('.reveal').forEach((el)=>revealObserver.observe(el));
+
+  const canvas = document.getElementById('orbit');
+  const ctx = canvas.getContext('2d', { alpha:true });
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  let width = 0;
+  let height = 0;
+  let centerX = 0;
+  let centerY = 0;
+
+  function resizeCanvas(){
+    width = canvas.offsetWidth;
+    height = canvas.offsetHeight;
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    centerX = width * 0.5;
+    centerY = height * 0.5;
+  }
+
+  function drawSpiral(time = 0){
+    ctx.clearRect(0,0,width,height);
+
+    const colors = ['#B073F0','#C38ADF','#DB8FBC','#E79A83','#E8935A'];
+    const maxTheta = Math.PI * 11;
+    const base = Math.min(width,height) * 0.035;
+    const growth = Math.min(width,height) * 0.0048;
+
+    for(let layer = 0; layer < 4; layer++){
+      ctx.beginPath();
+
+      const start = layer * 0.45;
+      for(let theta = start; theta < maxTheta; theta += 0.025){
+        const radius = base + growth * theta;
+        const wobble = Math.sin(theta * 1.7 + layer) * 3;
+        const angle = theta + time * (0.000025 + layer * 0.000004);
+        const x = centerX + Math.cos(angle) * (radius + wobble);
+        const y = centerY + Math.sin(angle) * (radius * 0.74 + wobble);
+
+        if(theta === start) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
+      }
+
+      const gradient = ctx.createLinearGradient(
+        centerX - Math.min(width,height)*0.25,
+        centerY,
+        centerX + Math.min(width,height)*0.35,
+        centerY
+      );
+
+      gradient.addColorStop(0, colors[layer] + '00');
+      gradient.addColorStop(.5, colors[layer] + 'B8');
+      gradient.addColorStop(1, colors[layer+1] + '10');
+
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = layer === 0 ? 1.25 : .75;
+      ctx.stroke();
+    }
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 2.6, 0, Math.PI * 2);
+    ctx.fillStyle = '#ECE8E3';
+    ctx.shadowColor = '#B073F0';
+    ctx.shadowBlur = 18;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  function animate(time){
+    drawSpiral(time);
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', ()=>{
+    resizeCanvas();
+    if(reduceMotion) drawSpiral(0);
+  });
+
+  resizeCanvas();
+
+ if (reduceMotion) {
+    drawSpiral(0);
+} else {
+    requestAnimationFrame(animate);
+}
+
+
+const bgMusic = document.getElementById('bgMusic');
+bgMusic.volume = 0.05
+const audioToggle = document.getElementById('audioToggle');
+const audioMute = document.getElementById('audioMute');
+const audioProgress = document.getElementById('audioProgress');
+const audioProgressFill = document.getElementById('audioProgressFill');
+const audioTime = document.getElementById('audioTime');
+
+bgMusic.volume = 0.05;
+
+async function startBackgroundMusic(){
+  try{
+    bgMusic.volume = 0.05;
+    await bgMusic.play();
+  }catch(error){
+    // Safari and iOS can still require the visible play button.
+  }
+  syncAudioUI();
+}
+
+window.addEventListener('load', startBackgroundMusic, { once:true });
+
+const unlockEvents = ['pointerdown','touchstart','keydown'];
+
+function removeUnlockListeners(){
+  unlockEvents.forEach((eventName)=>{
+    document.removeEventListener(eventName, unlockAudio);
+  });
+}
+
+function unlockAudio(event){
+  if(event.target instanceof Element && event.target.closest('.audio-player')) return;
+  startBackgroundMusic().finally(removeUnlockListeners);
+}
+
+unlockEvents.forEach((eventName)=>{
+  document.addEventListener(eventName, unlockAudio, { passive:true });
+});
+
+
+function formatTime(seconds){
+  if(!Number.isFinite(seconds)) return '00:00';
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${String(minutes).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+}
+
+function syncAudioUI(){
+  audioToggle.textContent = bgMusic.paused ? '▶' : 'Ⅱ';
+  audioToggle.setAttribute('aria-label', bgMusic.paused ? 'Play music' : 'Pause music');
+  audioMute.textContent = bgMusic.muted ? 'Muted' : 'Sound';
+
+  const progress = bgMusic.duration
+    ? (bgMusic.currentTime / bgMusic.duration) * 100
+    : 0;
+
+  audioProgressFill.style.width = `${progress}%`;
+  audioTime.textContent = formatTime(bgMusic.currentTime);
+}
+
+audioToggle.addEventListener('click', async ()=>{
+  removeUnlockListeners();
+  try{
+    if(bgMusic.paused) await bgMusic.play();
+    else bgMusic.pause();
+  }catch(error){
+    console.warn('Audio could not start:', error);
+  }
+  syncAudioUI();
+});
+
+audioMute.addEventListener('click', ()=>{
+  bgMusic.muted = !bgMusic.muted;
+  syncAudioUI();
+});
+
+audioProgress.addEventListener('click', (event)=>{
+  if(!bgMusic.duration) return;
+  const rect = audioProgress.getBoundingClientRect();
+  const ratio = Math.min(1,Math.max(0,(event.clientX - rect.left) / rect.width));
+  bgMusic.currentTime = ratio * bgMusic.duration;
+  syncAudioUI();
+});
+
+bgMusic.addEventListener('timeupdate', syncAudioUI);
+bgMusic.addEventListener('play', syncAudioUI);
+bgMusic.addEventListener('pause', syncAudioUI);
+bgMusic.addEventListener('loadedmetadata', syncAudioUI);
+bgMusic.addEventListener('ended', syncAudioUI);
+
+syncAudioUI();
+</script>
+<style id="correcao-final">
+  #sphereIntro #orbit {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  #sphereIntro .sphere-video {
+    transform: scale(1.65) !important;
+    transform-origin: center center !important;
+  }
+</style>
+
+<script>
+  function ajustarVolume() {
+    document.querySelectorAll("audio").forEach(function(audio) {
+      audio.volume = 0.05;
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", ajustarVolume);
+  document.addEventListener("play", ajustarVolume, true);
+</script>
+</body>
+</html>
