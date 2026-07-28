@@ -196,6 +196,7 @@
   }
 
   #orbit{
+    display:none;
     position:absolute;
     inset:0;
     width:100%;
@@ -945,9 +946,11 @@
     z-index: 1 !important;
     display: block !important;
     background: #07070A !important;
-  }
+  transform: scale(1.35) !important;
+transform-origin: center center !important;}
 
   #sphereIntro #orbit {
+    display: none !important;
     position: absolute !important;
     inset: 0 !important;
     width: 100% !important;
@@ -1501,17 +1504,18 @@
 
 
 const bgMusic = document.getElementById('bgMusic');
+bgMusic.volume = 0.05
 const audioToggle = document.getElementById('audioToggle');
 const audioMute = document.getElementById('audioMute');
 const audioProgress = document.getElementById('audioProgress');
 const audioProgressFill = document.getElementById('audioProgressFill');
 const audioTime = document.getElementById('audioTime');
 
-bgMusic.volume = 0.35;
+bgMusic.volume = 0.05;
 
 async function startBackgroundMusic(){
   try{
-    bgMusic.volume = 0.35;
+    bgMusic.volume = 0.05;
     await bgMusic.play();
   }catch(error){
     // Safari and iOS can still require the visible play button.
@@ -1591,6 +1595,28 @@ bgMusic.addEventListener('ended', syncAudioUI);
 
 syncAudioUI();
 </script>
+<style id="correcao-final">
+  #sphereIntro #orbit {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
 
+  #sphereIntro .sphere-video {
+    transform: scale(1.65) !important;
+    transform-origin: center center !important;
+  }
+</style>
+
+<script>
+  function ajustarVolume() {
+    document.querySelectorAll("audio").forEach(function(audio) {
+      audio.volume = 0.03;
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", ajustarVolume);
+  document.addEventListener("play", ajustarVolume, true);
+</script>
 </body>
 </html>
